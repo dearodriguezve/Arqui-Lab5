@@ -13,7 +13,7 @@ const app = new Vue({
     },
     methods:{
         postREST:function(){
-            fetch('http://'+ '146.148.107.218' +':4000/sa-auth-ms/resources/users', {
+            fetch('http://'+ 'localhost' +':4000/sa-auth-ms/resources/users', {
                 credentials: "omit",
                 headers: {
                   Accept: 'application/json',
@@ -56,7 +56,7 @@ const app = new Vue({
                   username
                 }
               }`)
-            fetch("http://146.148.107.218:5000/graphql?", {
+            fetch("http://'localhost:5000/graphql?", {
                 credentials: "omit",
                 headers: {
                     "Accept": "application/json",
