@@ -1,3 +1,4 @@
+
 const app = new Vue({
     el:'#app',
     data:{
@@ -8,22 +9,25 @@ const app = new Vue({
         password: '',
         respuesta: false,
         textoRespuesta:'',
-        fondoRespuesta: ''
+        fondoRespuesta: '',
     },
     methods:{
         postREST:function(){
             fetch('http://'+ '146.148.107.218' +':4000/sa-auth-ms/resources/users', {
-                method: 'POST',
+                credentials: "omit",
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json',
                 },
+                referrer: "http://localhost:4000/sa-auth-ms/resources/users",
                 body: JSON.stringify({
                     firstName: this.firstName,
                     lastName: this.lastName,
                     username: this.username,
                     password: this.password
                 }),
+                method: 'POST',
+                mode: "cors"
             }).then(response => {
                 if(response.ok) {
                     this.respuesta=true
@@ -42,23 +46,41 @@ const app = new Vue({
 
         },
         postGraphQL:function(){
-            fetch('http://146.148.107.218:5000/graphiql', {
-                method: 'POST',
+            console.log(`mutation {
+                createUser(user: {
+                  firstName:" `+this.firstName+`"
+                  lastName: "`+this.lastName+`"
+                  username: "`+this.username+`"
+                  password: "`+this.password+`"
+                }) {
+                  username
+                }
+              }`)
+            fetch("http://146.148.107.218:5000/graphql?", {
+                credentials: "omit",
                 headers: {
-                  'Content-Type': 'application/json',
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
                 },
+                referrer: "http://localhost:5000/graphiql",
                 body: JSON.stringify({
-                    query:`
-                    query {
-                        allUsers {
-                          firstName
+                    query:`mutation {
+                        createUser(user: {
+                          firstName:" `+this.firstName+`"
+                          lastName: "`+this.lastName+`"
+                          username: "`+this.username+`"
+                          password: "`+this.password+`"
+                        }) {
+                          username
                         }
-                    }`
+                      }`
                 }),
+                method: "POST",
+                mode: "cors"
             }).then(response => {
                 if(response.ok) {
                     this.respuesta=true
-                    this.textoRespuesta = 'Usuario creado satisfactoriamente desde Microservicio: ['+this.firstName+', '+this.lastName+', '+this.username+', '+this.password+ ']'
+                    this.textoRespuesta = 'Usuario creado satisfactoriamente desde API Gateway: ['+this.firstName+', '+this.lastName+', '+this.username+', '+this.password+ ']'
                     this.fondoRespuesta="p-3 mb-2 bg-success text-white"
                 } else {
                     this.respuesta=true
@@ -75,4 +97,3 @@ const app = new Vue({
         }
     }
 })
-
