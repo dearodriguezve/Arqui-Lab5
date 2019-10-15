@@ -56,7 +56,7 @@ const app = new Vue({
                   username
                 }
               }`)
-            fetch("http://'localhost:5000/graphql?", {
+            fetch("http://localhost:5000/graphql?", {
                 credentials: "omit",
                 headers: {
                     "Accept": "application/json",
