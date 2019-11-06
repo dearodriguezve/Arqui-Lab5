@@ -13,13 +13,13 @@ const app = new Vue({
     },
     methods:{
         postREST:function(){
-            fetch('http://'+ 'localhost' +':4000/sa-auth-ms/resources/users', {
+            fetch('http://'+ '146.148.107.218' +':4000/sa-auth-ms/resources/users', {
                 credentials: "omit",
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json',
                 },
-                referrer: "http://localhost:4000/sa-auth-ms/resources/users",
+                referrer: "http://146.148.107.218:4000/sa-auth-ms/resources/users",
                 body: JSON.stringify({
                     firstName: this.firstName,
                     lastName: this.lastName,
@@ -56,13 +56,13 @@ const app = new Vue({
                   username
                 }
               }`)
-            fetch("http://localhost:5000/graphql?", {
+            fetch("http://146.148.107.218:5000/graphql?", {
                 credentials: "omit",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                referrer: "http://localhost:5000/graphiql",
+                referrer: "http://146.148.107.218:5000/graphiql",
                 body: JSON.stringify({
                     query:`mutation {
                         createUser(user: {
